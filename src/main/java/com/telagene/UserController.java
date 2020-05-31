@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.metrics.MetricsProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,28 +14,28 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/foo")
-public class WebController {
+@RequestMapping("/user")
+public class UserController {
 
-   private static final Logger log = LogManager.getLogger(WebController.class);
+   private static final Logger log = LogManager.getLogger(UserController.class);
 
-   private WebConfig webConfig;
+   private User user;
 
-   @GetMapping
+   @GetMapping("/status")
    public String getStatus() {
       return "Running as " + LocalDateTime.now().toString();
    }
 
    @GetMapping("/config")
-   public String getConfigName() {
+   public String getUserName() {
       return  getInstance().getName();
    }
 
    @PutMapping(value = "/id/{id}")
    @ResponseStatus(HttpStatus.OK)
    public void updateId(@PathVariable("id") Integer id) {
-      getInstance().setNumber(id);
-      log.info("[updateId] WebConfig updated with number=" + id + " New WebConfig=" +  getInstance());
+      getInstance().setId(id);
+      log.info("[updateId] User updated with id=" + id + " New User=" +  getInstance());
 
    }
 
@@ -45,16 +43,16 @@ public class WebController {
    @ResponseStatus(HttpStatus.OK)
    public void updateName(@PathVariable("name") String name) {
       getInstance().setName(name);
-      log.info("[updateName] WebConfig updated with name=" + name + " New WebConfig=" + getInstance());
+      log.info("[updateName] User updated with name=" + name + " New User=" + getInstance());
 
    }
 
-   private WebConfig getInstance() {
-      if (webConfig == null){
+   private User getInstance() {
+      if (user == null){
          log.info("[getInstance] Created new instance");
-         webConfig = new WebConfig("Test", 0);
+         user = new User("Test", 0);
       }
-      return webConfig;
+      return user;
    }
 
 }

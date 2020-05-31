@@ -3,17 +3,17 @@ package com.telagene;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class WebConfig {
+public class User {
 
    private String name;
-   private int number;
+   private int id;
 
-   public WebConfig() {
+   public User() {
    }
 
-   public WebConfig(String name, int number) {
+   public User(String name, int id) {
       this.name = name;
-      this.number = number;
+      this.id = id;
    }
 
    public String getName() {
@@ -24,19 +24,19 @@ public class WebConfig {
       this.name = name;
    }
 
-   public int getNumber() {
-      return number;
+   public int getId() {
+      return id;
    }
 
-   public void setNumber(int number) {
-      this.number = number;
+   public void setId(int id) {
+      this.id = id;
    }
 
    @Override
    public String toString() {
       return "WebConfig{" +
             "name='" + name + '\'' +
-            ", number=" + number +
+            ", number=" + id +
             '}';
    }
 }
