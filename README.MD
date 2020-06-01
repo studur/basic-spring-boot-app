@@ -1,5 +1,7 @@
 First Spring boot web application
 
+[![Build Status](https://travis-ci.org/studur/basic-spring-boot-app.svg?branch=master)](https://travis-ci.org/studur/basic-spring-boot-app)
+
 Compile
 ```
 mvn clean package spring-boot:repackage
