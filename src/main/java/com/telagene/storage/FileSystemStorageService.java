@@ -22,9 +22,23 @@ public class FileSystemStorageService implements StorageService {
 
 	private final Path rootLocation;
 
+	/**
+	 * Main constructor. Autowired signifies that this bean is automatically instantiated at application startup.
+	 * @param properties {@link StorageProperties} source properties.
+	 */
 	@Autowired
 	public FileSystemStorageService(StorageProperties properties) {
 		this.rootLocation = Paths.get(properties.getLocation());
+	}
+
+	@Override
+	public void init() {
+		try {
+			Files.createDirectories(rootLocation);
+		}
+		catch (IOException e) {
+			throw new StorageException("Could not initialize storage", e);
+		}
 	}
 
 	@Override
@@ -90,15 +104,5 @@ public class FileSystemStorageService implements StorageService {
 	@Override
 	public void deleteAll() {
 		FileSystemUtils.deleteRecursively(rootLocation.toFile());
-	}
-
-	@Override
-	public void init() {
-		try {
-			Files.createDirectories(rootLocation);
-		}
-		catch (IOException e) {
-			throw new StorageException("Could not initialize storage", e);
-		}
 	}
 }

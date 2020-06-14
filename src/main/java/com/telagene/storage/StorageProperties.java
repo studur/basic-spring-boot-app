@@ -2,6 +2,10 @@ package com.telagene.storage;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * This class is responsible to define application properties.
+ */
+
 @ConfigurationProperties("storage")
 public class StorageProperties {
 
