@@ -1,4 +1,4 @@
-package com.telagene.storage;
+package com.telagene.model;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

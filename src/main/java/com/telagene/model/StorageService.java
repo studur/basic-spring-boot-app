@@ -1,4 +1,4 @@
-package com.telagene.storage;
+package com.telagene.model;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;

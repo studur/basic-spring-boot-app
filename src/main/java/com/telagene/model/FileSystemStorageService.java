@@ -1,4 +1,4 @@
-package com.telagene.storage;
+package com.telagene.model;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
-import com.telagene.storage.StorageProperties;
-import com.telagene.storage.StorageService;
+import com.telagene.model.StorageProperties;
+import com.telagene.model.StorageService;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)

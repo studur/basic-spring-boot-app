@@ -1,4 +1,4 @@
-package com.telagene.storage;
+package com.telagene.model;
 
 public class StorageException extends RuntimeException {
 

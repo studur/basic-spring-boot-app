@@ -1,4 +1,4 @@
-package com.telagene;
+package com.telagene.model;
 
 import org.springframework.context.annotation.Configuration;
 
