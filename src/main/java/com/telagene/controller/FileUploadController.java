@@ -1,11 +1,14 @@
 package com.telagene.controller;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.telagene.model.StorageFileNotFoundException;
 import com.telagene.model.StorageService;
@@ -24,6 +28,7 @@ import com.telagene.model.StorageService;
  */
 
 @RestController
+@CrossOrigin(origins = "*")
 public class FileUploadController {
 
    private final StorageService storageService;
@@ -34,7 +39,7 @@ public class FileUploadController {
    }
 
    @GetMapping("/")
-   public String listUploadedFiles() {
+   public String status() {
       return "Running as " + LocalDateTime.now().toString();
    }
 
@@ -47,10 +52,23 @@ public class FileUploadController {
             "attachment; filename=\"" + file.getFilename() + "\"").body(file);
    }
 
+   @GetMapping("/files")
+   public ResponseEntity<Stream<Path>> listUploadedFiles() {
+      return ResponseEntity.ok().body(storageService.loadAll());
+   }
+
    @PostMapping("/")
-   public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+   public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
       storageService.store(file);
-      return "You successfully uploaded " + file.getOriginalFilename() + "!";
+      return ResponseEntity.ok().body("You successfully uploaded " + file.getOriginalFilename() + "!");
+   }
+
+   @GetMapping("/redirect")
+   public RedirectView redirectWithUsingRedirectView(
+         RedirectAttributes attributes) {
+      attributes.addFlashAttribute("flashAttribute", "redirectWithRedirectView");
+      attributes.addAttribute("attribute", "redirectWithRedirectView");
+      return new RedirectView("/");
    }
 
    @ExceptionHandler(StorageFileNotFoundException.class)
